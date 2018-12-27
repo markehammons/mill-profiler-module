@@ -1,4 +1,5 @@
 import mill._
+import mill.define.Target
 import mill.scalalib._
 import mill.scalalib.scalafmt.ScalafmtModule
 import publish._
@@ -27,6 +28,20 @@ object `mill-profiler-module` extends ScalaModule with MillProfilerPublishModule
   def scalaVersion = "2.12.8"
 
   val millVersion = "0.3.5"
+
+  override def scalacOptions: Target[Seq[String]] = T {
+    Seq(
+      "-unchecked",
+      "-deprecation",
+      "-encoding", "utf-8",
+      "-explaintypes",
+      "-feature",
+      "-unchecked",
+      "-Xfatal-warnings",
+      "-Xlint"
+    ) ++ super.scalacOptions()
+  }
+
 
   override def compileIvyDeps = Agg(
     ivy"com.lihaoyi::mill-scalalib:$millVersion"
