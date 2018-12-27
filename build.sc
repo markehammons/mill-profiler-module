@@ -1,12 +1,10 @@
 import mill._
 import mill.scalalib._
+import mill.scalalib.scalafmt.ScalafmtModule
 import publish._
-import ammonite.ops._
-import mill.modules.Jvm.createJar
 
-trait MillProfilerPublishModule extends PublishModule{
-  def artifactName = T {"mill-profiler"}
-  def publishVersion = "0.0.1"
+trait MillProfilerPublishModule extends PublishModule {
+  def publishVersion = T {"0.0.1-SNAPSHOT"}
 
   def pomSettings = PomSettings(
     description = artifactName(),
@@ -25,12 +23,12 @@ trait MillProfilerPublishModule extends PublishModule{
   )
 }
 
-object `mill-profiler` extends ScalaModule with MillProfilerPublishModule {
-  def scalaVersion = T {"2.12.8"}
+object `mill-profiler-module` extends ScalaModule with MillProfilerPublishModule with ScalafmtModule {
+  def scalaVersion = "2.12.8"
 
   val millVersion = "0.3.5"
 
-  def compileIvyDeps = Agg(
+  override def compileIvyDeps = Agg(
     ivy"com.lihaoyi::mill-scalalib:$millVersion"
   )
 }
